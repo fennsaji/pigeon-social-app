@@ -1,0 +1,20 @@
+{
+  "name": "pigeonsocialapp",
+  "version": "1.0.0",
+  "description": "chating app",
+  "main": "Server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fenn Saji",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "mongodb": "^3.0.1",
+    "mongoose": "^5.0.0",
+    "socket.io": "^2.0.4"
+  }
+}
