@@ -3,6 +3,8 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
+const db = require('../Config/database');
+
 
 var UserSchema = new mongoose.Schema({
     email: {
@@ -21,6 +23,13 @@ var UserSchema = new mongoose.Schema({
       require: true,
       minlength: 6
     },
+    username: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 1,
+      unique: true,
+    },
     tokens: [{
       access: {
         type: String,
@@ -32,18 +41,18 @@ var UserSchema = new mongoose.Schema({
       }
     }]
   });
-  
+
   UserSchema.methods.toJSON = function () {
     var user = this;
     var userObject = user.toObject();
   
-    return _.pick(userObject, ['_id', 'email']);
+    return _.pick(userObject, ['_id', 'email', 'username']);
   };
   
   UserSchema.methods.generateAuthToken = function () {
     var user = this;
     var access = 'auth';
-    var token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET).toString();
+    var token = jwt.sign({_id: user._id.toHexString(), access}, db.secret).toString();
   
     user.tokens.push({access, token});
   
@@ -52,39 +61,26 @@ var UserSchema = new mongoose.Schema({
     });
   };
   
-  UserSchema.methods.removeToken = function (token) {
-    var user = this;
+  // UserSchema.methods.removeToken = function (token) {
+  //   var user = this;
   
-    return user.update({
-      $pull: {
-        tokens: {token}
-      }
-    });
+  //   return user.update({
+  //     $pull: {
+  //       tokens: {token}
+  //     }
+  //   });
+  // };
+
+  UserSchema.statics.getUserById = function(id, callback) {
+    User.findById(id, callback);
   };
   
-  UserSchema.statics.findByToken = function (token) {
-    var User = this;
-    var decoded;
-  
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (e) {
-      return Promise.reject();
-    }
-  
-    return User.findOne({
-      '_id': decoded._id,
-      'tokens.token': token,
-      'tokens.access': 'auth'
-    });
-  };
-  
-  UserSchema.statics.findByCredentials = function (email, password) {
+  UserSchema.statics.findByCredentials = function (username, password) {
     var User = this;
   
-    return User.findOne({email}).then((user) => {
+    return User.findOne({username}).then((user) => {
       if (!user) {
-        return Promise.reject();
+        return Promise.reject('Not Found USer');
       }
   
       return new Promise((resolve, reject) => {
@@ -93,13 +89,15 @@ var UserSchema = new mongoose.Schema({
           if (res) {
             resolve(user);
           } else {
-            reject();
+            reject('Wrong Pss');
           }
         });
       });
     });
   };
   
+
+  // Hashing Password before Saving
   UserSchema.pre('save', function (next) {
     var user = this;
   

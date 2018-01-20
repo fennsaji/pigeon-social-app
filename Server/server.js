@@ -5,8 +5,23 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const db = require('./Config/database');
 
 const publicPath = path.join(__dirname, '../public');
+
+const users = require('./Routes/users');
+
+// Port Number
+const port = process.env.PORT || 8080;
+
+mongoose.Promise = global.Promise;
+mongoose.connect(db.database, 
+    (err)=>{
+    if (err)
+        console.log('MongoDB Down');
+    else 
+        console.log('Connected to Mongo');
+});
 
 var app = express();
 
@@ -22,10 +37,11 @@ app.use(passport.session());
 
 require('./Config/passport')(passport);
 
-const users = require('./Routes/users');
+app.use('/users', users);
 
-// Port Number
-const port = process.env.PORT || 8080;
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+  });
 
 app.listen(port, ()=> {
     console.log(`Connected to port ${port}`);
