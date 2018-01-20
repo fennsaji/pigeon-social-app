@@ -32,12 +32,20 @@ router.post('/login', (req, res, next) => {
         }
       );
     })
-    .catch((err) => res.send('err'));
+    .catch((err) => res.status(404).send('err'));
 });
 
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
+});
+
+router.delete('/logout', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  req.user.removeToken(req.header('Authorization')).then((doc) => {
+    res.status(200).send(doc);
+  }, () => {
+    res.status(400).send('Unabn;e');
+  });
 });
 
 module.exports = router;

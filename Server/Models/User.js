@@ -53,6 +53,7 @@ var UserSchema = new mongoose.Schema({
     var user = this;
     var access = 'auth';
     var token = jwt.sign({_id: user._id.toHexString(), access}, db.secret).toString();
+    token = 'JWT ' + token;
   
     user.tokens.push({access, token});
   
@@ -61,15 +62,17 @@ var UserSchema = new mongoose.Schema({
     });
   };
   
-  // UserSchema.methods.removeToken = function (token) {
-  //   var user = this;
-  
-  //   return user.update({
-  //     $pull: {
-  //       tokens: {token}
-  //     }
-  //   });
-  // };
+  UserSchema.methods.removeToken = function (token) {
+    var user = this;
+    // delete user.tokens;
+    console.log(token);
+   
+    return user.update({
+      $pull: {
+        tokens : {access:'auth',token}
+      }
+    });
+  };
 
   UserSchema.statics.getUserById = function(id, callback) {
     User.findById(id, callback);
