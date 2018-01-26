@@ -15,7 +15,15 @@ router.post('/register', (req, res, next) => {
     password: req.body.password
   });
 
-  newUser.save().then(doc => res.send(doc)).catch(err => res.send('Error Saving'));
+  console.log(newUser);
+  newUser.save().then(user => {
+        res.json({success: true, msg: 'User registered'});
+    }
+  ).catch(err => {
+      console.log(err.name);
+      res.json({success: false, msg: 'Failed to register user'});
+    }
+  );
 });
 
 // Authenticate
@@ -32,7 +40,10 @@ router.post('/login', (req, res, next) => {
         }
       );
     })
-    .catch((err) => res.status(404).send('err'));
+    .catch((err) => {
+      console.log(err);
+      res.status(404).send({success:false, msg: 'Failed to login'});
+    });
 });
 
 // Profile

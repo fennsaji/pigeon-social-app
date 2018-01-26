@@ -28,12 +28,16 @@ var app = express();
 //Sending all files in public
 app.use(express.static(publicPath));
 
+app.use(cors());
+
 // Body Parser Middleware
 app.use(bodyParser.json());
 
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 require('./Config/passport')(passport);
 

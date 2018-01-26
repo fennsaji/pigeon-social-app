@@ -9,7 +9,10 @@
   "author": "Fenn Saji",
   "license": "ISC",
   "dependencies": {
+    "angular2-flash-messages": "^2.0.5",
+    "angular2-jwt": "^0.2.3",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.0.0",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.2",
@@ -22,5 +25,8 @@
     "path": "^0.12.7",
     "socket.io": "^2.0.4",
     "validator": "^9.2.0"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.6.5"
   }
 }

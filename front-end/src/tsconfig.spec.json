@@ -10,10 +10,12 @@
     ]
   },
   "files": [
-    "test.ts"
+    "test.ts",
+    "../src/app/Services/*.service.ts"
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "../src/app/Services/*.service.ts"
   ]
 }
