@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 import { AuthenticationService } from '../../Services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +10,14 @@ import { AuthenticationService } from '../../Services/authentication.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  Mssg: String;
 
-  constructor(private authSer: AuthenticationService) { }
+  constructor(
+      private authSer: AuthenticationService,
+      private router: Router
+    ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onRegisterSubmit(f: NgForm) {
     console.log(f);
@@ -25,8 +29,15 @@ export class RegisterComponent implements OnInit {
     };
     console.log(User);
     this.authSer.registerUser(User).subscribe(data => {
+      if (data) {
+        this.Mssg = data.msg;
+      }
+      this.router.navigate(['/login']);
       console.log(data);
     }, err => {
+      if (err) {
+        this.Mssg = err.msg;
+      }
       console.log(err);
     });
   }

@@ -30,19 +30,24 @@ router.post('/register', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(req.body);
 
   User.findByCredentials(username, password)
     .then((user) => {
       console.log(user);
       user.generateAuthToken().then(
         (token) => {
-          res.header('Authorization', token).send(user);
+          res
+            .header('Authorization', token)
+            .header('Access-Control-Expose-Headers', 'Authorization')
+            .json({success:true, user:user});
         }
       );
     })
     .catch((err) => {
       console.log(err);
-      res.status(404).send({success:false, msg: 'Failed to login'});
+      res.status(404)
+        .json({success:false, msg: 'Failed to login'});
     });
 });
 
@@ -53,9 +58,9 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 
 router.delete('/logout', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   req.user.removeToken(req.header('Authorization')).then((doc) => {
-    res.status(200).send(doc);
+    res.status(200).json({success:true, doc: doc});
   }, () => {
-    res.status(400).send('Unabn;e');
+    res.status(400).json({success:false, msg: 'Failed to logout'});
   });
 });
 

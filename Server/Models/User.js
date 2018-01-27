@@ -83,7 +83,7 @@ var UserSchema = new mongoose.Schema({
   
     return User.findOne({username}).then((user) => {
       if (!user) {
-        return Promise.reject('Not Found USer');
+        return Promise.reject('Not Found User');
       }
   
       return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ var UserSchema = new mongoose.Schema({
           if (res) {
             resolve(user);
           } else {
-            reject('Wrong Pss');
+            reject('Wrong Password');
           }
         });
       });
