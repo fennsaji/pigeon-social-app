@@ -17,7 +17,6 @@ export class AuthenticationService {
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:8080/users/register', user, {headers: headers})
       .map(res => {
-        console.log(res.headers);
         return res.json();
       });
   }
@@ -42,7 +41,6 @@ export class AuthenticationService {
     this.user = user;
     localStorage.setItem('id_token', this.authToken);
     localStorage.setItem('user', JSON.stringify(this.user));
-    console.log('saved');
   }
 
   loadToken() {
@@ -60,7 +58,6 @@ export class AuthenticationService {
   logout() {
     const headers = new Headers();
     this.loadToken();
-    console.log(this.authToken);
     headers.append('Authorization', this.authToken);
     this.authToken = null;
     this.user = null;

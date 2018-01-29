@@ -1,2 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 body { padding-top: 70px; }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.help-block{
+  background-color: #FFD2D2;
+  padding: 2px;
+  border-radius: 3px;
+  margin: 5px 0px 8px;
+  color: #D8000C;
+  vertical-align: middle;
+}

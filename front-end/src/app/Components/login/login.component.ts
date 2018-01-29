@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  submitted = false;
   Mssg: String;
+
   constructor(
     private authSer: AuthenticationService,
     private router: Router
@@ -25,12 +27,15 @@ export class LoginComponent implements OnInit {
     };
     console.log(User);
     this.authSer.loginUser(User).subscribe(res => {
-      this.authSer.storeUserData(res.headers.get('Authorization'), res.json().user);
+      const token  =  res.headers.get('Authorization');
+      const userObj = res.json().user;
+
+      this.authSer.storeUserData(token, userObj);
       this.router.navigate(['/chat']);
-      console.log(res, res.headers.get('Authorization'));
+
     }, err => {
-      this.Mssg = 'Invalid Details';
-      console.log(err);
+      this.submitted = true;
+      this.Mssg = JSON.parse(err._body).msg;
     });
   }
 

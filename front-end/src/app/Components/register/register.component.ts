@@ -9,36 +9,48 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnChanges {
+  @ViewChild('f') signUpForm: NgForm;
   Mssg: String;
+  submitted = false;
 
   constructor(
       private authSer: AuthenticationService,
       private router: Router
-    ) { }
+    ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('Init');
+  }
+
+  ngOnChanges() {
+    console.log('Changed');
+  }
 
   onRegisterSubmit(f: NgForm) {
-    console.log(f);
+
     const User =  {
       name: f.value.name,
       username : f.value.username,
       email : f.value.email,
       password : f.value.password,
     };
-    console.log(User);
+
+    console.log(this.signUpForm);
     this.authSer.registerUser(User).subscribe(data => {
-      if (data) {
-        this.Mssg = data.msg;
-      }
-      this.router.navigate(['/login']);
-      console.log(data);
+        this.submitted = false;
+        this.router.navigate(['/login']);
+
     }, err => {
       if (err) {
-        this.Mssg = err.msg;
+        this.signUpForm.value.email.valid = false;
+        this.Mssg = JSON.parse(err._body).msg;
+        const code = JSON.parse(err._body).code;
+        if ( code === 0 ) {
+
+        }
+        this.submitted = true;
       }
-      console.log(err);
     });
   }
 }

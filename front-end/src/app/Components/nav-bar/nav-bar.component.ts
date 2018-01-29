@@ -29,4 +29,8 @@ export class NavBarComponent implements OnInit {
       this.loggedIn = false;
     });
   }
+
+  checkLoggedIn() {
+    return this.authSer.loggedIn();
+  }
 }

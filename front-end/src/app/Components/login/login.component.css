@@ -50,3 +50,7 @@ button {
   max-width: 400px;
   margin: auto;
 }
+
+p {
+  text-align: center;
+}

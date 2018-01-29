@@ -3,7 +3,6 @@
     <div class="col-md-3"></div>
     <div class="col-sm-6 col-sm-offset-2">
 
-      <p class="error-message" >{{ Mssg }}</p>
       <form class="form-signin" (ngSubmit)="onLoginSubmit(f)" #f="ngForm">
         <h2 class="form-signin-heading display-4">LOGIN</h2>
 
@@ -27,6 +26,8 @@
           name="password"
           ngModel
           required>
+
+        <p class="help-block" *ngIf="submitted">{{ Mssg }}</p>
 
         <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="!f.valid">Sign in</button>
       </form>
