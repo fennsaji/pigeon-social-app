@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
       username : f.value.username,
       password : f.value.password
     };
-    console.log(User);
     this.authSer.loginUser(User).subscribe(res => {
       const token  =  res.headers.get('Authorization');
       const userObj = res.json().user;

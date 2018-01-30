@@ -3,16 +3,20 @@ import { NgForm } from '@angular/forms';
 import { ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 import { AuthenticationService } from '../../Services/authentication.service';
 import { Router } from '@angular/router';
+import { ViewChildren } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit, OnChanges {
-  @ViewChild('f') signUpForm: NgForm;
+export class RegisterComponent implements OnInit {
+  @ViewChildren('f') signUpForm: NgForm;
   Mssg: String;
   submitted = false;
+  username: string;
+  email: string;
 
   constructor(
       private authSer: AuthenticationService,
@@ -21,10 +25,6 @@ export class RegisterComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('Init');
-  }
-
-  ngOnChanges() {
-    console.log('Changed');
   }
 
   onRegisterSubmit(f: NgForm) {
@@ -43,11 +43,13 @@ export class RegisterComponent implements OnInit, OnChanges {
 
     }, err => {
       if (err) {
-        this.signUpForm.value.email.valid = false;
         this.Mssg = JSON.parse(err._body).msg;
         const code = JSON.parse(err._body).code;
-        if ( code === 0 ) {
-
+        if ( code === 4 ) {
+          this.email = null;
+        }
+        if (code === 5) {
+          this.username = null;
         }
         this.submitted = true;
       }

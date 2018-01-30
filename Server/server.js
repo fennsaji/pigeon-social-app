@@ -28,6 +28,7 @@ var app = express();
 //Sending all files in public
 app.use(express.static(publicPath));
 
+// Middleware for interprocess communication
 app.use(cors());
 
 // Body Parser Middleware

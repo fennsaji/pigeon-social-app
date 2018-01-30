@@ -49,6 +49,7 @@ var UserSchema = new mongoose.Schema({
     return _.pick(userObject, ['_id', 'email', 'username']);
   };
   
+
   UserSchema.methods.generateAuthToken = function () {
     var user = this;
     var access = 'auth';
@@ -62,6 +63,7 @@ var UserSchema = new mongoose.Schema({
     });
   };
   
+
   UserSchema.methods.removeToken = function (token) {
     var user = this;
     // delete user.tokens;
@@ -74,9 +76,11 @@ var UserSchema = new mongoose.Schema({
     });
   };
 
+
   UserSchema.statics.getUserById = function(id, callback) {
     User.findById(id, callback);
   };
+
   
   UserSchema.statics.findByCredentials = function (username, password) {
     var User = this;
@@ -115,6 +119,7 @@ var UserSchema = new mongoose.Schema({
       next();
     }
   });
+  
   
   var User = mongoose.model('User', UserSchema);
   

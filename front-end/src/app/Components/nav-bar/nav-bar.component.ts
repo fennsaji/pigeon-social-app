@@ -19,12 +19,10 @@ export class NavBarComponent implements OnInit {
 
   logout() {
     this.authSer.logout().subscribe(data => {
-      console.log(data);
       this.router.navigate(['/']);
       this.loggedIn = false;
     },
     err => {
-      console.log(err);
       this.router.navigate(['/']);
       this.loggedIn = false;
     });
