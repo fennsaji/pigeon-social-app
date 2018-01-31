@@ -12,7 +12,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   connection;
   message;
   messageObject = {
-    toUser: 'dishu143',
+    toUser: 'the',
     fromUser: 'thefenn',
     timeStamp: new Date(),
     message: String
