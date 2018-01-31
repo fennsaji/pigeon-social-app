@@ -6,6 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const db = require('./Config/database');
+const http = require('http');
 
 const publicPath = path.join(__dirname, '../public');
 
@@ -38,7 +39,9 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+var server = http.createServer(app);
 
+require('./Chats/chats')(server);
 
 require('./Config/passport')(passport);
 
@@ -48,6 +51,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
   });
 
-app.listen(port, ()=> {
+server.listen(port, ()=> {
     console.log(`Connected to port ${port}`);
 });

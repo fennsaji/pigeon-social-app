@@ -15,6 +15,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { AuthenticationService } from './Services/authentication.service';
 import { ChatComponent } from './Components/chat/chat.component';
+import { ChatService } from './Services/chat.service';
 
 const appRoutes: Routes =  [
   {path: '', component: HomeComponent, pathMatch: 'full'},
@@ -43,7 +44,8 @@ const appRoutes: Routes =  [
   ],
   providers: [
     AuthenticationService,
-    AuthGuard
+    AuthGuard,
+    ChatService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { AuthenticationService } from '../../Services/authentication.service';
 import { Router } from '@angular/router';
+import { ChatService } from '../../Services/chat.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authSer: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private chatSer: ChatService
   ) {}
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit {
       const userObj = res.json().user;
 
       this.authSer.storeUserData(token, userObj);
+      this.chatSer.init();
       this.router.navigate(['/chat']);
 
     }, err => {
