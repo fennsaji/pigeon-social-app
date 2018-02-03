@@ -7,6 +7,11 @@ const db = require('../Config/database');
 
 
 var UserSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      minlength: 1,
+      required: true
+    },
     email: {
       type: String,
       required: true,

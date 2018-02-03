@@ -13,15 +13,14 @@ module.exports = function (server) {
         UsersObj[username]=socket.id;
         console.log(UsersObj);
 
-
-        socket.on('disconnect', function() {
+        socket.on('disconnect', () => {
             console.log('user disconnected');
         });
     
         socket.on('add-message', (messageObj) => {
             console.log('Adding message');
             console.log(messageObj);
-            io.to(messageObj.toUser).emit('message', messageObj);
+            io.to(UsersObj[messageObj.toUser]).emit('message', messageObj);
             // Function above that stores the message in the database
             // databaseStore(message)
         });

@@ -1,0 +1,13 @@
+<div class="chat__main">
+  <p id="curruser">{{messageObject.toUser}}</p>
+  <ol id="messages" class="chat__messages" >
+    <li *ngFor="let mess of messages">{{mess.text}}</li>
+  </ol>
+
+  <div class="chat__footer">
+    <form id="message-form">
+      <input name="message" type="text" placeholder="Message" [(ngModel)]="message" autofocus autocomplete="off"/>
+      <button (click)="sendMessage()">Send</button>
+    </form>
+  </div>
+</div>

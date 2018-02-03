@@ -15,7 +15,18 @@ router.post('/register', (req, res, next) => {
     password: req.body.password
   });
 
+  let newChat = new Chat({
+    username: req.body.username
+  });
+
+  newChat.save().then(chat => {
+    console.log(chat);
+  }).catch(err => {
+    console.log('Unable to save');
+  });
+
   console.log(newUser);
+  
   newUser.save().then(user => {
         res.json({success: true, msg: 'User registered'});
     }

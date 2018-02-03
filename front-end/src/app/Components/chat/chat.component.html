@@ -1,17 +1,15 @@
 <div class="chat__sidebar">
   <h3>People</h3>
-  <div id="users"></div>
-</div>
-
-<div class="chat__main">
-  <ol id="messages" class="chat__messages" >
-    <li *ngFor="let mess of messages">{{mess.text}}</li>
-  </ol>
-
-  <div class="chat__footer">
-    <form id="message-form">
-      <input name="message" type="text" placeholder="Message" [(ngModel)]="message" autofocus autocomplete="off"/>
-      <button (click)="sendMessage()">Send</button>
-    </form>
+  <div id="users">
+    <ul>
+      <li
+      *ngFor="let user of users"
+      [routerLink]="[user]"
+      routerLinkActive="active"
+      style= "cursor: pointer"
+      >{{user}}</li>
+    </ul>
   </div>
 </div>
+<router-outlet></router-outlet>
+

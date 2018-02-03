@@ -6,7 +6,7 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class ChatService {
-  private url = 'http://localhost:8080';
+  private url = 'http://192.168.1.45:8080';
   private socket;
   private messages = [];
   public newMess = new EventEmitter<any>();
@@ -14,6 +14,14 @@ export class ChatService {
   constructor(private authSer: AuthenticationService) {
     this.init();
   }
+
+  //  {
+  //   this.authSer.getProfile().subscribe((data) => {
+  //     console.log(data);
+  //   }, (err) => {
+  //     console.log(err);
+  //   });
+  // }
 
   init() {
     this.authSer.getProfile().subscribe(res => {
