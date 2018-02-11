@@ -41,7 +41,7 @@ app.use(passport.session());
 
 var server = http.createServer(app);
 
-require('./Chats/chats')(server);
+require('./Chats/chats')(server, app);
 
 require('./Config/passport')(passport);
 

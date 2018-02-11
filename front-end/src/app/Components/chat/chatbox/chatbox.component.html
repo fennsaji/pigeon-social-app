@@ -1,7 +1,17 @@
-<div class="chat__main">
+<!-- <div class="chat__main">
   <p id="curruser">{{messageObject.toUser}}</p>
-  <ol id="messages" class="chat__messages" >
-    <li *ngFor="let mess of messages">{{mess.text}}</li>
+  <ol id="messages" class="chat__messages list-group">
+    <li *ngFor="let mess of messages" >
+      <div ngClass="'fenn': mess.fromUser" >
+          <span id="user">{{mess.fromUser}}
+          </span>
+            :
+          <span id="message">
+            {{mess.message}}
+          </span>
+          <span id="timestamp"> {{mess.timeStamp | date:'shortTime'}}</span>
+      </div>
+    </li>
   </ol>
 
   <div class="chat__footer">
@@ -10,4 +20,30 @@
       <button (click)="sendMessage()">Send</button>
     </form>
   </div>
-</div>
+</div> -->
+
+<div class="chat-box">
+    <p id="curruser">{{messageObject.toUser}}</p>
+      <ol id="messages">
+          <li *ngFor="let mess of messages" class="chat-card" >
+            <div class="row">
+                <div [ngClass] = "{'col-md-8': mess.toUser}"></div>
+                <div class="chat-div col-md-4">
+                    <p id="message">
+                      {{mess.message}}
+                    </p>
+                    <p id="timestamp"> {{mess.timeStamp | date:'shortTime'}}</p>
+                </div>
+            </div>
+          </li>
+        </ol>
+
+
+
+    <div class="chat-footer">
+      <form id="message-form">
+        <input name="message" type="text" placeholder="Message" [(ngModel)]="message" autofocus autocomplete="off"/>
+        <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+      </form>
+    </div>
+  </div>

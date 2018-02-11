@@ -5,6 +5,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../Config/database');
 const {User} = require('../Models/User');
+const Chat = require('../Models/Chats');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -26,7 +27,7 @@ router.post('/register', (req, res, next) => {
   });
 
   console.log(newUser);
-  
+
   newUser.save().then(user => {
         res.json({success: true, msg: 'User registered'});
     }

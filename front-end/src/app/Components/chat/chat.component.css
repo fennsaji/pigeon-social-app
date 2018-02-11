@@ -204,7 +204,8 @@ button:disabled {
     font-size: 1rem;
   }
   .chat__sidebar {
-    display: none;
+    /* display: none; */
+    width: 100%;
   }
   .chat__footer {
     flex-direction: column;
@@ -214,5 +215,8 @@ button:disabled {
   }
   .chat__footer button {
     margin-right: 0;
+  }
+  .chat__main {
+    width: 100%;
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnDestroy } from '@angular/core';
 import { ChatService } from '../../../Services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { Params } from '@angular/router';
+import { NgClass } from '@angular/common';
 import { AuthenticationService } from '../../../Services/authentication.service';
 
 @Component({
@@ -12,7 +13,9 @@ import { AuthenticationService } from '../../../Services/authentication.service'
 })
 export class ChatboxComponent implements OnInit, OnDestroy {
   messages = [];
-  connection;
+  connection1;
+  connection2;
+  connection3;
   message;
   messageObject = {
     toUser: String,
@@ -24,28 +27,57 @@ export class ChatboxComponent implements OnInit, OnDestroy {
   constructor(private chatSer: ChatService,
               private route_name: ActivatedRoute) { }
 
-  sendMessage() {
-    console.log(this.message);
-    this.messageObject.message = this.message;
-    // console.log(this.messages);
-    this.chatSer.sendMessage(this.messageObject);
-    this.message = '';
-  }
-
   ngOnInit() {
-    this.connection = this.chatSer.newMess.subscribe(message => {
-      this.messages = message;
-      console.log(this.message);
-    });
     this.route_name.params.subscribe((params: Params) => {
       this.messageObject.toUser = params['userid'];
+      this.connection1 = this.chatSer.oldMess.subscribe(message => {
+        console.log('Messages11:', message);
+        this.messages = message[params['userid']];
+        console.log('Messages1old:', this.messages);
+      });
+
+      this.connection2 = this.chatSer.newMess.subscribe(message => {
+        console.log('Messages22:', message);
+        if (message.fromUser === params['userid']) {
+          this.messages.push(message);
+        }
+        console.log('Messages2new:', this.messages);
+      });
+
+      this.chatSer.getMessageEmit();
     });
-    // this.chatSer.currUser().then();
+
+    this.chatSer.currUser.subscribe(currUser => {
+      this.messageObject.fromUser = currUser.username;
+      console.log('Current User', currUser);
+    });
+  }
+
+  sendMessage() {
+    console.log(this.message);
+    this.messageObject.timeStamp = new Date();
+    this.messageObject.message = this.message;
+    this.addToChat();
+    this.chatSer.sendMessage(this.messageObject);
+    console.log(this.messageObject);
+    this.message = '';
+    this.messageObject.timeStamp = null;
+    this.messageObject.message = null;
+  }
+
+  addToChat() {
+    if ( this.messages ) {
+      this.messages.push(Object.assign({}, this.messageObject));
+    } else {
+      this.messages = [this.messageObject];
+    }
   }
 
   ngOnDestroy() {
-    this.connection.unsubscribe();
+    this.messages = [];
+    this.connection1.unsubscribe();
+    this.connection2.unsubscribe();
+    this.connection3.unsubscribe();
   }
-
 
 }

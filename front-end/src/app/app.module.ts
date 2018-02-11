@@ -17,6 +17,7 @@ import { AuthenticationService } from './Services/authentication.service';
 import { ChatComponent } from './Components/chat/chat.component';
 import { ChatService } from './Services/chat.service';
 import { ChatboxComponent } from './Components/chat/chatbox/chatbox.component';
+import { ChatHomeComponent } from './Components/chat/chat-home/chat-home.component';
 
 const appRoutes: Routes =  [
   {path: '', component: HomeComponent, pathMatch: 'full'},
@@ -24,6 +25,7 @@ const appRoutes: Routes =  [
   {path: 'login', component: LoginComponent},
   {path: 'chat', component: ChatComponent, canActivate: [AuthGuard],
     children: [
+      {path : '', component: ChatHomeComponent},
       {path : ':userid', component: ChatboxComponent}
     ]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
@@ -39,7 +41,8 @@ const appRoutes: Routes =  [
     HomeComponent,
     ProfileComponent,
     ChatComponent,
-    ChatboxComponent
+    ChatboxComponent,
+    ChatHomeComponent
   ],
   imports: [
     BrowserModule,

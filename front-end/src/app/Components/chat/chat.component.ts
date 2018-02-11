@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../Services/chat.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -8,11 +8,16 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  users = ['thefenn', 'fennsaji'];
+  friends = [];
 
-  constructor() {}
+  constructor(private chatSer: ChatService) {
+  }
 
-  ngOnInit() {}
-
-
+  ngOnInit() {
+    // this.chatSer.init();
+    this.chatSer.friendsEmit.subscribe(friends => {
+      this.friends = friends;
+    });
+    this.chatSer.getFriends();
+  }
 }

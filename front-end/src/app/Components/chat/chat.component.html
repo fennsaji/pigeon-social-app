@@ -3,11 +3,11 @@
   <div id="users">
     <ul>
       <li
-      *ngFor="let user of users"
-      [routerLink]="[user]"
+      *ngFor="let user of friends"
+      [routerLink]="[user.username]"
       routerLinkActive="active"
       style= "cursor: pointer"
-      >{{user}}</li>
+      >{{user.username}}</li>
     </ul>
   </div>
 </div>

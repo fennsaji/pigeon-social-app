@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-xs-3"></div>
+  <div class="col-xs-6">
+    <form (ngSubmit)="searchPeople(f)" #f="ngForm">
+      <div class="form-group">
+          <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder="Search Friends"
+          ngModel>
+          <button type="submit" name="search" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+  </div>
+</div>

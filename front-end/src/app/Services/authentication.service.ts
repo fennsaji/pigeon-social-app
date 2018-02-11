@@ -62,7 +62,7 @@ export class AuthenticationService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
-    return this.http.delete('http://localhost:8080/users/logout', {headers: headers})
+    return this.http.delete('http://192.168.1.45:8080/users/logout', {headers: headers})
       .map(res => res.json());
   }
 }
