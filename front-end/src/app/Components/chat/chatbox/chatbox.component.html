@@ -24,10 +24,10 @@
 
 <div class="chat-box">
     <p id="curruser">{{messageObject.toUser}}</p>
-      <ol id="messages">
+      <ol #scroll id="messages" ngx-auto-scroll lock-y-offset='10' observe-attributes>
           <li *ngFor="let mess of messages" class="chat-card" >
             <div class="row">
-                <div [ngClass] = "{'col-md-8': mess.toUser}"></div>
+                <div [ngClass] = "{'col-md-8': mess.toUser==friend}"></div>
                 <div class="chat-div col-md-4">
                     <p id="message">
                       {{mess.message}}

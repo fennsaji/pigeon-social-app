@@ -13,10 +13,9 @@ import { AuthenticationService } from '../../../Services/authentication.service'
 })
 export class ChatboxComponent implements OnInit, OnDestroy {
   messages = [];
-  connection1;
-  connection2;
-  connection3;
+  connection;
   message;
+  friend;
   messageObject = {
     toUser: String,
     fromUser: String,
@@ -29,19 +28,12 @@ export class ChatboxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route_name.params.subscribe((params: Params) => {
-      this.messageObject.toUser = params['userid'];
-      this.connection1 = this.chatSer.oldMess.subscribe(message => {
+      this.friend = params['userid'];
+      this.messageObject.toUser = this.friend;
+      this.connection = this.chatSer.oldMess.subscribe(message => {
         console.log('Messages11:', message);
-        this.messages = message[params['userid']];
+        this.messages = message[this.friend];
         console.log('Messages1old:', this.messages);
-      });
-
-      this.connection2 = this.chatSer.newMess.subscribe(message => {
-        console.log('Messages22:', message);
-        if (message.fromUser === params['userid']) {
-          this.messages.push(message);
-        }
-        console.log('Messages2new:', this.messages);
       });
 
       this.chatSer.getMessageEmit();
@@ -57,17 +49,16 @@ export class ChatboxComponent implements OnInit, OnDestroy {
     console.log(this.message);
     this.messageObject.timeStamp = new Date();
     this.messageObject.message = this.message;
-    this.addToChat();
+    this.addToChat(this.messageObject);
     this.chatSer.sendMessage(this.messageObject);
     console.log(this.messageObject);
     this.message = '';
-    this.messageObject.timeStamp = null;
-    this.messageObject.message = null;
   }
 
-  addToChat() {
+  addToChat(mssg) {
+    console.log('added to chat');
     if ( this.messages ) {
-      this.messages.push(Object.assign({}, this.messageObject));
+      this.messages.push(Object.assign({}, mssg));
     } else {
       this.messages = [this.messageObject];
     }
@@ -75,9 +66,7 @@ export class ChatboxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.messages = [];
-    this.connection1.unsubscribe();
-    this.connection2.unsubscribe();
-    this.connection3.unsubscribe();
+    this.connection.unsubscribe();
   }
 
 }
