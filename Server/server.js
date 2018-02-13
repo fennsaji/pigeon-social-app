@@ -16,7 +16,7 @@ const users = require('./Routes/users');
 const port = process.env.PORT || 8080;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(db.database, 
+mongoose.connect(process.env.MONGODB_URI || db.database, 
     (err)=>{
     if (err)
         console.log('MongoDB Down');

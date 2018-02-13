@@ -58,7 +58,7 @@ var UserSchema = new mongoose.Schema({
   UserSchema.methods.generateAuthToken = function () {
     var user = this;
     var access = 'auth';
-    var token = jwt.sign({_id: user._id.toHexString(), access}, db.secret).toString();
+    var token = jwt.sign({_id: user._id.toHexString(), access}, process.env.SECRET || db.secret).toString();
     token = 'JWT ' + token;
   
     user.tokens.push({access, token});

@@ -16,7 +16,6 @@ export class ChatService {
   private currUsername;
   public newMess = new EventEmitter<any>();
   public oldMess = new EventEmitter<any>();
-  public myMess = new EventEmitter<any>();
   public currUser = new EventEmitter<any>();
   public friendsEmit = new EventEmitter<any>();
 
@@ -72,8 +71,6 @@ export class ChatService {
         this.messages[name] = [data];
       }
       console.log('new emitt mess ser', this.messages);
-      // this.newMess.emit(this.messages);
-      // this.newMess.emit(data);
     });
 
     this.socket.on('disconnect', () => {
@@ -118,8 +115,6 @@ export class ChatService {
       }
       console.log('Friends Service', this.friends);
       console.log('Messages Service', this.messages);
-      // this.oldMess.emit(this.messages);
-      // this.myMess.emit(this.myMessages);
     });
     this.getMessages();
   }
@@ -134,7 +129,6 @@ export class ChatService {
 
 
   sortMessage() {
-    // if (this.messages === []) {
       console.log('sortinginside...');
       let i, j;
       for (const user of this.friends) {
@@ -177,10 +171,7 @@ export class ChatService {
       console.log('strange');
     }
   }
-
-
-    // }
-    console.log('sorting...');
-    this.oldMess.emit(this.messages);
+  console.log('sorting...');
+  this.oldMess.emit(this.messages);
   }
 }

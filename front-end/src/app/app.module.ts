@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 // import { FlashMessagesModule } from 'angular2-flash-messages';
 import { Routes, RouterModule } from '@angular/router';
-import { NgxAutoScrollModule } from 'ngx-auto-scroll';
+// import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 
 import { AuthGuard } from './Guards/auth.guard';
 import { AppComponent } from './app.component';
@@ -50,7 +50,7 @@ const appRoutes: Routes =  [
     RouterModule.forRoot(appRoutes),
     FormsModule,
     HttpModule,
-    NgxAutoScrollModule
+    // NgxAutoScrollModule
   ],
   providers: [
     AuthenticationService,
