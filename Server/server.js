@@ -16,7 +16,7 @@ const users = require('./Routes/users');
 const port = process.env.PORT || 8080;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || db.database, 
+mongoose.connect(process.env.MONGODB || db.database, 
     (err)=>{
     if (err)
         console.log('MongoDB Down');
@@ -48,7 +48,7 @@ require('./Config/passport')(passport);
 app.use('/users', users);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html'));
   });
 
 server.listen(port, ()=> {

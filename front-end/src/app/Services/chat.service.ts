@@ -29,7 +29,7 @@ export class ChatService {
       this.currUser.emit(res.user);
       this.currUsername = res.user;
       console.log(res.user.username);
-      this.socket = io(this.url, {
+      this.socket = io({
         query: {
           username: res.user.username
         }
@@ -56,7 +56,7 @@ export class ChatService {
       name: 'Fenn'
     };
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://192.168.1.45:8080/addFriend', userObj, {headers: headers});
+    return this.http.post('addFriend', userObj, {headers: headers});
   }
 
   getMessages() {

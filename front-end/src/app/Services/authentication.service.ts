@@ -15,7 +15,7 @@ export class AuthenticationService {
   registerUser(user) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://192.168.1.45:8080/users/register', user, {headers: headers})
+    return this.http.post('users/register', user, {headers: headers})
       .map(res => {
         return res.json();
       });
@@ -24,7 +24,7 @@ export class AuthenticationService {
   loginUser(user) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://192.168.1.45:8080/users/login', user, {headers: headers});
+    return this.http.post('users/login', user, {headers: headers});
   }
 
   getProfile() {
@@ -32,7 +32,7 @@ export class AuthenticationService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://192.168.1.45:8080/users/profile', {headers: headers})
+    return this.http.get('users/profile', {headers: headers})
       .map(res => res.json());
   }
 
@@ -62,7 +62,7 @@ export class AuthenticationService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
-    return this.http.delete('http://192.168.1.45:8080/users/logout', {headers: headers})
+    return this.http.delete('users/logout', {headers: headers})
       .map(res => res.json());
   }
 }
